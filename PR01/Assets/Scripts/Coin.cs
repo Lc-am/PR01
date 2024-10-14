@@ -4,7 +4,7 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     public static int count;      
-    public static int maxCount;   
+    public static int maxCount;
     //private static bool maxCountInitialized = false;  
 
     //void Awake()
@@ -15,9 +15,9 @@ public class Coin : MonoBehaviour
     //    }
     //}
 
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))  
+        if (collision.gameObject.CompareTag("Player"))  
         {
             count++; 
 
