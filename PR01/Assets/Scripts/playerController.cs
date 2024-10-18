@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class playerController : MonoBehaviour
 {
     public float velocidadMovimiento = 5f;  
@@ -9,9 +10,12 @@ public class playerController : MonoBehaviour
     private Rigidbody rb;
     private bool enSuelo = true;
 
+    private Animator animator;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
