@@ -5,20 +5,8 @@ using UnityEngine;
 public class LogicaSalto : MonoBehaviour
 {
     public playerController playerController;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OntriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         playerController.puedoSaltar = true;
     }
@@ -27,4 +15,5 @@ public class LogicaSalto : MonoBehaviour
     {
         playerController.puedoSaltar = false;
     }
+
 }
