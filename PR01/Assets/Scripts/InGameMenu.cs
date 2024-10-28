@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour
 {
-    public GameObject pauseMenuUI; // Arrastra el Panel aquí en el Inspector
+    public GameObject pauseMenuUI; 
     private bool isPaused = false;
 
     private void Update()
@@ -24,27 +24,27 @@ public class InGameMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        pauseMenuUI.SetActive(false);   // Oculta el menú de pausa
-        Time.timeScale = 1f;            // Reanuda el tiempo
-        isPaused = false;               // Marca como no pausado
+        pauseMenuUI.SetActive(false);   
+        Time.timeScale = 1f;            
+        isPaused = false;               
     }
 
     public void PauseGame()
     {
-        pauseMenuUI.SetActive(true);    // Muestra el menú de pausa
-        Time.timeScale = 0f;            // Pausa el tiempo
-        isPaused = true;                // Marca como pausado
+        pauseMenuUI.SetActive(true);    
+        Time.timeScale = 0f;           
+        isPaused = true;                
     }
 
     public void LoadMainMenu()
     {
-        Time.timeScale = 1f;            // Asegúrate de reanudar el tiempo antes de cambiar de escena
-        SceneManager.LoadScene("MenuPrincipal"); // Cambia "MainMenu" por el nombre de tu escena principal
+        Time.timeScale = 1f;            
+        SceneManager.LoadScene("MenuPrincipal"); 
     }
 
     public void Restart()
     {
-        Time.timeScale = 1f;            // Asegúrate de reanudar el tiempo antes de reiniciar
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reinicia la escena actual
+        Time.timeScale = 1f;            
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 }
