@@ -39,7 +39,7 @@ public class InGameMenu : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;            // Asegúrate de reanudar el tiempo antes de cambiar de escena
-        SceneManager.LoadScene("MainMenu"); // Cambia "MainMenu" por el nombre de tu escena principal
+        SceneManager.LoadScene("MenuPrincipal"); // Cambia "MainMenu" por el nombre de tu escena principal
     }
 
     public void Restart()
