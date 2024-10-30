@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicaSalto : MonoBehaviour
+public class isGrounded : MonoBehaviour
 {
     public playerController playerController;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        playerController.puedoSaltar = true;
+        playerController.isGrounded = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        playerController.puedoSaltar = false;
+        playerController.isGrounded = false;
     }
-
 }
