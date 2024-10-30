@@ -10,7 +10,11 @@ public class Obstacles: MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            playerController player = collision.gameObject.GetComponent<playerController>();
+            if (player != null)
+            {
+                player.Die(); // Llama al método de muerte del jugador
+            }
         }
     }
 }

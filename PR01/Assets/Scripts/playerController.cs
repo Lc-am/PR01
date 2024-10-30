@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
 {
@@ -20,20 +21,24 @@ public class playerController : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.forward * velocidad * Time.deltaTime);
 
-        if (isGrounded)
+        if (!animator.GetBool("Morir"))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            transform.Translate(Vector3.forward * velocidad * Time.deltaTime);
+
+            if (isGrounded)
             {
-                animator.SetBool("Saltar", true); // animación del salto
-                rb.AddForce(new Vector3(0, fuerzaSalto, 0), ForceMode.Impulse);
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    animator.SetBool("Saltar", true);
+                    rb.AddForce(new Vector3(0, fuerzaSalto, 0), ForceMode.Impulse);
+                }
+                animator.SetBool("TocarSuelo", true);
             }
-            animator.SetBool("TocarSuelo", true);
-        }
-        else 
-        {
-            EstoyCayendo();
+            else
+            {
+                EstoyCayendo();
+            }
         }
     }
 
@@ -42,6 +47,22 @@ public class playerController : MonoBehaviour
         // se desactivan las animaciones
         animator.SetBool("TocarSuelo", false);
         animator.SetBool("Saltar", false);
+    }
+
+    public void Die()
+    {
+        animator.SetBool("Morir", true); 
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true; 
+        GetComponent<Collider>().enabled = false; 
+
+        StartCoroutine(HandleDeath()); 
+    }
+
+    private IEnumerator HandleDeath()
+    {
+        yield return new WaitForSeconds(3f); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 }
 

@@ -15,11 +15,27 @@ public class Coin : MonoBehaviour
     //    }
     //}
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))  
+    //    {
+    //        count++; 
+
+    //        GetComponent<Collider>().enabled = false;
+
+    //        transform.DOMove(transform.position + Vector3.up * 1.25f, 0.5f)
+    //            .OnComplete(() =>
+    //            {
+    //                transform.DOScale(Vector3.zero, 0.5f)
+    //                    .OnComplete(() => Destroy(gameObject));  
+    //            });
+    //    }
+    //}
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))  
+        if (other.CompareTag("Player"))
         {
-            count++; 
+            count++;
 
             GetComponent<Collider>().enabled = false;
 
@@ -27,10 +43,11 @@ public class Coin : MonoBehaviour
                 .OnComplete(() =>
                 {
                     transform.DOScale(Vector3.zero, 0.5f)
-                        .OnComplete(() => Destroy(gameObject));  
+                        .OnComplete(() => Destroy(gameObject));
                 });
         }
     }
+
 
     void Start()
     {
