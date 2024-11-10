@@ -6,40 +6,64 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField]  private Button playButton;
-    [SerializeField]  private Button optionsButton;
-    [SerializeField]  private Button exitButton;
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button optionsButton;
+    [SerializeField] private Button exitButton;
 
     [SerializeField] private CanvasGroup mainMenuCanvasGroup;
     [SerializeField] private CanvasGroup optionsMenuCanvasGroup;
+    [SerializeField] private CanvasGroup levelSelectorCanvasGroup;  // CanvasGroup para el selector de niveles
 
     void OnEnable()
     {
-        playButton.onClick.AddListener(playLevel);
+        playButton.onClick.AddListener(OpenLevelSelector);
         optionsButton.onClick.AddListener(OpenOptionsMenu);
-        exitButton.onClick.AddListener(exitButtonClick);
+        exitButton.onClick.AddListener(ExitButtonClick);
     }
 
     void OnDisable()
     {
-        playButton.onClick.RemoveListener(playLevel);
+        playButton.onClick.RemoveListener(OpenLevelSelector);
         optionsButton.onClick.RemoveListener(OpenOptionsMenu);
-        exitButton.onClick.RemoveListener(exitButtonClick);
+        exitButton.onClick.RemoveListener(ExitButtonClick);
     }
 
-    void playLevel() 
+    void OpenLevelSelector()
     {
-        SceneManager.LoadScene("Jugable1");
+        // Muestra el CanvasGroup del selector de niveles y oculta el menú principal
+        ShowCanvasGroup(levelSelectorCanvasGroup, true);
+        ShowCanvasGroup(mainMenuCanvasGroup, false);
     }
 
-    void exitButtonClick()
+    public void LoadLevel1()
     {
+        SceneManager.LoadScene("Level1");
+    }
 
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                Application.Quit();
-        #endif
+    public void LoadLevel2()
+    {
+        SceneManager.LoadScene("Level2");
+    }
+
+    public void LoadLevel3()
+    {
+        SceneManager.LoadScene("Level3");
+    }
+
+    public void CloseSelectLevel()
+    {
+        // Muestra el menú principal y oculta el selector de niveles
+        ShowCanvasGroup(mainMenuCanvasGroup, true);
+        ShowCanvasGroup(levelSelectorCanvasGroup, false);
+    }
+
+    void ExitButtonClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
     }
 
     void OpenOptionsMenu()
