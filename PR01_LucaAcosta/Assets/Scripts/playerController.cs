@@ -11,10 +11,12 @@ public class playerController : MonoBehaviour
     private Animator animator; 
 
     public bool isGrounded;
+    private int dobleSalto;
 
     void Start()
     {
         isGrounded = false;
+        dobleSalto = 0;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
@@ -28,6 +30,8 @@ public class playerController : MonoBehaviour
 
             if (isGrounded)
             {
+                dobleSalto = 0;
+
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     animator.SetBool("Saltar", true);
@@ -37,6 +41,12 @@ public class playerController : MonoBehaviour
             }
             else
             {
+                if (Input.GetKeyDown(KeyCode.Space) && dobleSalto < 2)
+                {
+                    animator.SetBool("Saltar", true);
+                    rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+                    dobleSalto = 2;  
+                }
                 EstoyCayendo();
             }
         }
@@ -44,7 +54,6 @@ public class playerController : MonoBehaviour
 
     public void EstoyCayendo()
     {
-        // se desactivan las animaciones
         animator.SetBool("TocarSuelo", false);
         animator.SetBool("Saltar", false);
     }
