@@ -1,44 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Diagnostics;
 
 public class Shield : MonoBehaviour
 {
-    public GameObject shield;          // Asegúrate de asignar el objeto escudo en el Inspector
+    public GameObject shield;
+    public GameObject orbe;
 
     private bool activeShield;
 
     void Start()
     {
-        activeShield = false;
+        transform.DORotate(Vector3.up * 360f, 1f).
+        SetRelative().
+        SetEase(Ease.Linear).
+        SetLoops(-1);
 
-        // Asegúrate de que el escudo esté desactivado al principio
-        shield.SetActive(false);
-
-        // Rota el escudo 360 grados en el eje Y de manera continua
-        // El método DORotate rota el objeto en torno a un vector, aquí es alrededor de Y
-        transform.DORotate(Vector3.up * 360f, 5f, RotateMode.Local)   // 5 segundos para una rotación completa
-            .SetEase(Ease.Linear)                                      // Rotación constante
-            .SetLoops(-1, LoopType.Restart);                           // Bucle infinito
+        if (orbe != null)
+        {
+            orbe.SetActive(false);
+        }
     }
+
 
     void Update()
     {
-        // Activar y desactivar el escudo con la tecla "S" (puedes cambiarla si lo necesitas)
-        if (Input.GetKeyDown(KeyCode.S))  // Cambia la tecla si es necesario
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            activeShield = !activeShield;  // Alterna el estado del escudo
+            activeShield = !activeShield;
 
             if (activeShield)
             {
-                shield.SetActive(true);    // Activa el escudo
+                shield.SetActive(true);
             }
             else
             {
-                shield.SetActive(false);   // Desactiva el escudo
+                shield.SetActive(false);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            UnityEngine.Debug.Log("El escudo ha colisionado con el jugador!");
+
+            Destroy(gameObject);
+
+            if (orbe != null)
+            {
+                orbe.SetActive(true);  
             }
         }
     }
 }
-
