@@ -1,38 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public GameObject newPlayerPrefab; // Prefab del nuevo jugador
-    private GameObject currentPlayer; // Referencia al jugador actual
-
-    void Start()
-    {
-        // Encuentra al jugador actual en la escena
-        currentPlayer = GameObject.FindWithTag("Player");
-    }
+    public GameObject newSkin; // La nueva skin que se activará
+    private GameObject player; // Referencia al jugador
 
     private void OnTriggerEnter(Collider other)
     {
-        // Verifica si el objeto que entró al portal es el jugador
+        // Verifica si el objeto que entra en el trigger es el jugador
         if (other.CompareTag("Player"))
         {
-            // Cambia al prefab del jugador
-            ChangePlayer();
+            player = other.gameObject; // Guarda la referencia al jugador
+
+            // Cambia la skin del jugador
+            ChangeSkin();
+
+            // Desactiva al jugador
+            DisablePlayer();
         }
     }
 
-    private void ChangePlayer()
+    private void ChangeSkin()
     {
-        // Destruye el jugador actual
-        Destroy(currentPlayer);
+        if (newSkin != null)
+        {
+            // Desactiva la skin actual del jugador
+            player.SetActive(false);
 
-        // Instancia el nuevo prefab del jugador
-        Vector3 spawnPosition = new Vector3(0, 1, 0); // Cambia la posición según necesites
-        currentPlayer = Instantiate(newPlayerPrefab, spawnPosition, Quaternion.identity);
+            // Instancia la nueva skin en la posición del jugador
+            GameObject newSkinInstance = Instantiate(newSkin, player.transform.position, player.transform.rotation);
+            newSkinInstance.SetActive(true); // Activa la nueva skin
+        }
+        else
+        {
+            UnityEngine.Debug.LogWarning("No se ha asignado una nueva skin al portal.");
+        }
+    }
 
-        // Opcional: puedes asignar una etiqueta al nuevo jugador
-        currentPlayer.tag = "Player";
+    private void DisablePlayer()
+    {
+        // Desactiva el objeto del jugador
+        player.SetActive(false);
     }
 }

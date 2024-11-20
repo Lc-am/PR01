@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,12 +14,15 @@ public class playerController : MonoBehaviour
     public bool isGrounded;
     private int dobleSalto;
 
+    private Shield shield;
+
     void Start()
     {
         isGrounded = false;
         dobleSalto = 0;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        shield = FindObjectOfType<Shield>();
     }
 
     void Update()
@@ -72,6 +76,24 @@ public class playerController : MonoBehaviour
     {
         yield return new WaitForSeconds(3f); 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            if (shield != null && shield.IsShieldActive())
+            {
+                // Desactivar el escudo y continuar vivo
+                shield.DeactivateEffect();
+                UnityEngine.Debug.Log("El escudo ha absorbido el impacto, el jugador sigue vivo.");
+            }
+            else
+            {
+                // Si no hay escudo, el jugador muere
+                Die();
+            }
+        }
     }
 }
 

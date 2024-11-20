@@ -62,17 +62,17 @@ using DG.Tweening;
 public class Shield : MonoBehaviour
 {
     public GameObject shield;  // El objeto visual del escudo
-    public GameObject orbe;    // El objeto del orbe, si es necesario
+    public GameObject orbe;    // El objeto del orbe, que representa el efecto del escudo
 
     public bool activeShield = false;  // Estado del escudo
 
     void Start()
     {
-        // Inicialización de la rotación del escudo, si es necesario
-        transform.DORotate(Vector3.up * 360f, 1f).
-        SetRelative().
-        SetEase(Ease.Linear).
-        SetLoops(-1);
+        // Inicialización de la rotación del escudo
+        transform.DORotate(Vector3.up * 360f, 1f)
+            .SetRelative()
+            .SetEase(Ease.Linear)
+            .SetLoops(-1);
 
         if (orbe != null)
         {
@@ -81,27 +81,14 @@ public class Shield : MonoBehaviour
 
         if (shield != null)
         {
-            shield.SetActive(false);  // Asegúrate de que el escudo esté desactivado al inicio
+            shield.SetActive(true);  // Asegúrate de que el escudo esté activado al inicio
         }
-    }
-
-    void Update()
-    {
-        // Alterna el estado del escudo si ya está activo, no es necesario actualizar nada aquí
     }
 
     // Método público para obtener el estado del escudo
     public bool IsShieldActive()
     {
         return activeShield;
-    }
-
-    // Método público para desactivar el escudo
-    public void DeactivateShield()
-    {
-        activeShield = false;
-        shield.SetActive(false);  // Desactiva el objeto visual del escudo
-        UnityEngine.Debug.Log("Escudo desactivado por colisión.");
     }
 
     // Maneja las colisiones con los objetos con trigger
@@ -112,14 +99,20 @@ public class Shield : MonoBehaviour
         {
             UnityEngine.Debug.Log("El jugador ha colisionado con el escudo!");
 
-            activeShield = true;  // Activa el escudo
-            shield.SetActive(true);  // Activa el objeto visual del escudo
+            ActivateShield();  // Activa el escudo
             Destroy(gameObject);  // Destruye el objeto del escudo una vez que el jugador lo ha recogido
+        }
+    }
 
-            if (orbe != null)
-            {
-                orbe.SetActive(true);  // Si hay un orbe, actívalo
-            }
+    // Método para activar el escudo
+    public void ActivateShield()
+    {
+        activeShield = true;  // Activa el escudo
+        shield.SetActive(true);  // Asegúrate de que el escudo esté visible
+
+        if (orbe != null)
+        {
+            orbe.SetActive(true);  // Activa el orbe como efecto visual del escudo
         }
     }
 
@@ -131,9 +124,23 @@ public class Shield : MonoBehaviour
         {
             if (activeShield)
             {
-                DeactivateShield();  // Desactiva el escudo si está activo
+                DeactivateEffect();  // Desactiva el escudo si está activo
                 UnityEngine.Debug.Log("Escudo desactivado debido a la colisión con un obstáculo.");
             }
         }
+    }
+
+    // Método para desactivar el escudo
+    public void DeactivateEffect()
+    {
+        activeShield = false;  // Desactiva el escudo
+        shield.SetActive(false);  // Desactiva el objeto visual del escudo
+
+        if (orbe != null)
+        {
+            orbe.SetActive(false);  // Desactiva el orbe
+        }
+
+        UnityEngine.Debug.Log("Escudo desactivado.");
     }
 }
