@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
 
 public class PauseMenu : MonoBehaviour
 {
@@ -13,17 +12,18 @@ public class PauseMenu : MonoBehaviour
     public Button mainMenuButton;
 
     public Canvas optionsMenuCanvas;
-
     public Canvas optionsPauseMenu;
+
     private bool isPaused = false;
+    private bool isInOptions = false;
 
     private void OnEnable()
     {
         pauseAction.action.Enable();
-        pauseAction.action.performed += TogglePause; 
+        pauseAction.action.performed += TogglePause;
     }
 
-    public void OnDisable()
+    private void OnDisable()
     {
         pauseAction.action.Disable();
         pauseAction.action.performed -= TogglePause;
@@ -35,7 +35,6 @@ public class PauseMenu : MonoBehaviour
         optionsPauseMenu = GetComponent<Canvas>();
         optionsPauseMenu.enabled = false;
 
-        //gameObject.SetActive(false);
         resumeButton.onClick.AddListener(ResumeGame);
         optionsButton.onClick.AddListener(OpenOptions);
         mainMenuButton.onClick.AddListener(GoToMainMenu);
@@ -43,6 +42,12 @@ public class PauseMenu : MonoBehaviour
 
     public void TogglePause(InputAction.CallbackContext context)
     {
+        if (isInOptions)
+        {
+            CloseOptions(); 
+            return;
+        }
+
         if (!isPaused)
         {
             OpenPauseMenu();
@@ -57,7 +62,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 0;
         isPaused = true;
-        optionsPauseMenu.enabled= true;
+        optionsPauseMenu.enabled = true;
     }
 
     public void ClosePauseMenu()
@@ -78,12 +83,14 @@ public class PauseMenu : MonoBehaviour
     {
         optionsPauseMenu.enabled = false;
         optionsMenuCanvas.enabled = true;
+        isInOptions = true;
     }
 
     public void CloseOptions()
     {
         optionsPauseMenu.enabled = true;
         optionsMenuCanvas.enabled = false;
+        isInOptions = false;
     }
 
     public void GoToMainMenu()
@@ -92,3 +99,4 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("mainMenu");
     }
 }
+

@@ -7,22 +7,24 @@ using UnityEngine.InputSystem;
 public class NavigateToAfterTimeOrPress : MonoBehaviour
 {
     [SerializeField] private string nextSceneName;
-    [SerializeField] private float waitTime; 
+    [SerializeField] private float waitTime;
     [SerializeField] private InputActionReference skipAction;
+    [SerializeField] private List<string> skipEnabledScenes; 
+    [SerializeField] private string skipOnlyScene; 
 
     private bool hasNavigated = false;
 
     private void Awake()
     {
-        if(waitTime > 0)
+        if (waitTime > 0 && SceneManager.GetActiveScene().name != skipOnlyScene)
         {
             Invoke(nameof(NavigateToNextScreen), waitTime);
-        }     
+        }
     }
 
     private void Update()
     {
-        if (skipAction.action.triggered)
+        if (skipEnabledScenes.Contains(SceneManager.GetActiveScene().name) && skipAction.action.triggered)
         {
             NavigateToNextScreen();
         }

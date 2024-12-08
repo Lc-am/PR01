@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button playButton;
     [SerializeField] private Button optionsButton;
+    [SerializeField] private Button creditsButton;
     [SerializeField] private Button exitButton;
 
     [SerializeField] private CanvasGroup mainMenuCanvasGroup;
@@ -48,6 +49,11 @@ public class MainMenu : MonoBehaviour
     public void LoadLevel3()
     {
         SceneManager.LoadScene("Level3");
+    }
+
+    public void creditsScene()
+    {
+        SceneManager.LoadScene("Credits");
     }
 
     public void CloseSelectLevel()
