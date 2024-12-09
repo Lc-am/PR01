@@ -8,7 +8,7 @@ public class ColorChanger : MonoBehaviour
     [SerializeField] private InputActionReference changeColorAction; // Referencia de InputAction para el cambio de color
 
     private SkinnedMeshRenderer skinnedMeshRenderer;
-    private int currentMaterialIndex = 0; // Índice del material actual
+    public int currentMaterialIndex = 0; // Índice del material actual
 
     void Start()
     {
@@ -28,17 +28,17 @@ public class ColorChanger : MonoBehaviour
         changeColorAction.action.performed += ChangeColor;
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         changeColorAction.action.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         changeColorAction.action.Disable();
     }
 
-    private void ChangeColor(InputAction.CallbackContext context)
+    public void ChangeColor(InputAction.CallbackContext context)
     {
         if (materials.Count > 0 && skinnedMeshRenderer != null)
         {
@@ -48,3 +48,8 @@ public class ColorChanger : MonoBehaviour
         }
     }
 }
+
+
+
+
+

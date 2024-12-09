@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Suelo
   - Obstacle
+  - ParedVerde
+  - ParedRoja
+  - ParedAzul
+  - ParedAmarilla
   layers:
   - Default
   - TransparentFX

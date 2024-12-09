@@ -17,8 +17,13 @@ public class ChameleonController : MonoBehaviour
 
     public bool isGrounded { get; private set; }
 
+    private ColorChanger colorChanger; //Nuevo
+
     void Start()
     {
+
+        colorChanger = GetComponentInParent<ColorChanger>();  //Nuevo
+
         isGrounded = false;
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -52,7 +57,11 @@ public class ChameleonController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle") ||
+        (other.gameObject.CompareTag("ParedVerde") && colorChanger.currentMaterialIndex != 0) ||
+        (other.gameObject.CompareTag("ParedRoja") && colorChanger.currentMaterialIndex != 1) ||
+        (other.gameObject.CompareTag("ParedAmarilla") && colorChanger.currentMaterialIndex != 2) ||
+        (other.gameObject.CompareTag("ParedAzul") && colorChanger.currentMaterialIndex != 3))
         {
             Die();
         }
@@ -68,6 +77,19 @@ public class ChameleonController : MonoBehaviour
         if (GameManager.instance != null)
         {
             GameManager.instance.PlayerDied();
+        }
+    }
+
+    public int GetCurrentMaterialIndex()
+    {
+        if (colorChanger != null)
+        {
+            return colorChanger.currentMaterialIndex;
+        }
+        else
+        {
+            Debug.LogError("ColorChanger no está asignado.");
+            return -1; // Devuelve un valor por defecto si no se encuentra ColorChanger
         }
     }
 }

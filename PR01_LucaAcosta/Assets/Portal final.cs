@@ -1,7 +1,8 @@
 using UnityEngine;
-public class PortalSwitch : MonoBehaviour
+
+public class ChameleonSwitch : MonoBehaviour
 {
-    [SerializeField] private GameObject currentPlayer; // Personaje actual
+    [SerializeField] private GameObject currentPlayer; // Personaje original
     [SerializeField] private GameObject chameleon;     // Camaleón
     [SerializeField] private GameObject portalEffect;  // Efecto visual del portal
 
@@ -15,7 +16,7 @@ public class PortalSwitch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == currentPlayer)
+        if (other.gameObject == chameleon)
         {
             // Instancia efectos visuales
             if (portalEffect != null)
@@ -23,23 +24,20 @@ public class PortalSwitch : MonoBehaviour
                 Instantiate(portalEffect, transform.position, Quaternion.identity);
             }
 
-            // Cambiar al camaleón
-            chameleon.transform.position = currentPlayer.transform.position;
-            chameleon.transform.rotation = currentPlayer.transform.rotation;
+            // Cambiar al jugador original
+            currentPlayer.transform.position = chameleon.transform.position;
+            currentPlayer.transform.rotation = chameleon.transform.rotation;
 
-            currentPlayer.SetActive(false);
-            chameleon.SetActive(true);
+            chameleon.SetActive(false);
+            currentPlayer.SetActive(true);
 
             // Cambiar objetivo de la cámara
             if (cameraTargetSwitcher != null)
             {
-                cameraTargetSwitcher.SwitchToChameleon();
+                cameraTargetSwitcher.SwitchToPlayer();
             }
 
             Debug.Log("Portal activado. Cambio de personajes realizado.");
         }
     }
 }
-
-
-
