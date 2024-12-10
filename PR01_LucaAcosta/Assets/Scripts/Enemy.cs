@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
             transform.Translate(transform.right * velocidad * Time.deltaTime);
         }
 
-        if (tiempoDesdeInicio >= 40f)
+        if (tiempoDesdeInicio >= 120f)
         {
             Destroy(gameObject);
         }

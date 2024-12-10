@@ -14,7 +14,6 @@ public class CameraTargetSwitcher : MonoBehaviour
         {
             virtualCamera.Follow = chameleonTarget;
             virtualCamera.LookAt = chameleonTarget;
-            Debug.Log("Cámara cambiada al camaleón.");
         }
     }
 
@@ -24,7 +23,6 @@ public class CameraTargetSwitcher : MonoBehaviour
         {
             virtualCamera.Follow = playerTarget;
             virtualCamera.LookAt = playerTarget;
-            Debug.Log("Cámara cambiada al jugador.");
         }
     }
 }

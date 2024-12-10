@@ -17,12 +17,12 @@ public class ChameleonController : MonoBehaviour
 
     public bool isGrounded { get; private set; }
 
-    private ColorChanger colorChanger; //Nuevo
+    private ColorChanger colorChanger;
 
     void Start()
     {
 
-        colorChanger = GetComponentInParent<ColorChanger>();  //Nuevo
+        colorChanger = GetComponentInParent<ColorChanger>();  
 
         isGrounded = false;
         rb = GetComponent<Rigidbody>();
@@ -88,8 +88,7 @@ public class ChameleonController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("ColorChanger no está asignado.");
-            return -1; // Devuelve un valor por defecto si no se encuentra ColorChanger
+            return -1; 
         }
     }
 }

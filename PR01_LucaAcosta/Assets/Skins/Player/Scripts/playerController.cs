@@ -20,7 +20,6 @@ public class playerController : MonoBehaviour
 
     [SerializeField] private InputActionReference jump;
 
-
     void Start()
     {
         isGrounded = false;
@@ -63,28 +62,16 @@ public class playerController : MonoBehaviour
         }
     }
 
-
-    public void Victoria()
-    {
-        UnityEngine.Debug.Log("Quieto");
-        canMove = false; 
-        rb.velocity = Vector3.zero; 
-        rb.isKinematic = true; 
-        UnityEngine.Debug.Log("Movimiento detenido");
-    }
-
     public void ActivarEscudo()
     {
         escudoActivo = true;
         shieldEffect.SetActive(true);
-        UnityEngine.Debug.Log("Escudo activado");
     }
 
     private void DesactivarEscudo()
     {
         escudoActivo = false;
         shieldEffect.SetActive(false);
-        UnityEngine.Debug.Log("Escudo desactivado");
     }
 
     private void OnCollisionEnter(Collision other)
@@ -98,8 +85,6 @@ public class playerController : MonoBehaviour
                 {
                     animator.SetBool("Choque", true);
                 }
-
-                UnityEngine.Debug.Log("El escudo ha absorbido el impacto, el jugador sigue vivo.");
 
                 DesactivarEscudo(); 
             }
@@ -133,10 +118,8 @@ public class playerController : MonoBehaviour
 
     private IEnumerator ResetChoqueBool()
     {
-        // Esperar la duración de la animación de choque (ajusta según tu animación)
         yield return new WaitForSeconds(0.5f);
 
-        // Desactivar el booleano para regresar a la animación base
         if (animator != null)
         {
             animator.SetBool("Choque", false);
