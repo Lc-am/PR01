@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Revisar
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        if (isPlayerDead) return; // Evitar múltiples reinicios
+        if (isPlayerDead) return; 
         isPlayerDead = true;
 
         intentos++;
@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RestartScene()
     {
-        yield return new WaitForSeconds(3f); // Esperar antes de reiniciar
-        isPlayerDead = false; // Resetear estado
+        yield return new WaitForSeconds(2f); 
+        isPlayerDead = false; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -53,17 +53,14 @@ public class GameManager : MonoBehaviour
         if (gameWon) return;
         gameWon = true;
 
-        // Cambiar prioridad de cámaras
         mainCamera.Priority = 0;
         victoryCamera.Priority = 10;
 
-        // Activar Canvas de victoria si está configurado
         if (victoryCanvas != null)
         {
             victoryCanvas.SetActive(true);
         }
 
-        // Detener movimiento del jugador
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {

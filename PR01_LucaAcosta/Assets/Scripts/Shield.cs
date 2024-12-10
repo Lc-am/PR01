@@ -1,26 +1,41 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class Shield : MonoBehaviour
 {
-    // Referencia al objeto que contiene el efecto del escudo
     public GameObject shieldEffect;
+
+    private void Start()
+    {
+        transform.DORotate(Vector3.up * 360f, 1f)
+            .SetRelative()
+            .SetEase(Ease.Linear)
+            .SetLoops(-1);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Verificar si el objeto que colisiona es el jugador
+        if (other.CompareTag("Player")) 
         {
             playerController playerController = other.GetComponent<playerController>();
             if (playerController != null)
             {
-                playerController.ActivarEscudo(); // Activar la lógica del escudo
+                playerController.ActivarEscudo(); 
 
-                // Activar el efecto visual del escudo
                 if (shieldEffect != null)
                 {
                     shieldEffect.SetActive(true);
                 }
 
-                Destroy(gameObject); 
+                transform.DOScale(Vector3.zero, 1f) 
+                    .OnComplete(() =>
+                    {
+                        transform.DOScale(Vector3.one, 1f)  
+                            .SetLoops(-1, LoopType.Yoyo)  
+                            .SetEase(Ease.InOutSine); 
+                    });
+
+                GetComponent<Collider>().enabled = false;
             }
         }
     }

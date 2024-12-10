@@ -8,11 +8,8 @@ public class Credits : MonoBehaviour
 {
     void Start()
     {
-        Invoke("WaitToEnd", 30); //Depende del tiempo que dure la animacion de los creditos
+        Invoke("WaitToEnd", 16); 
     }
-
-
-
 
     void Update()
     {
